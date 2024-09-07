@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flaskmovies - Watch movies for free</title>
 </head>
@@ -251,35 +252,13 @@
     <p>Watch movies for free!</p></b></div>
 <table>
     <tr>
-        <td><lite-youtube id="video1" videoid="BSYAPKgcgj0"></lite-youtube></td>
-        <td><lite-youtube id="video2" videoid="Z2fOOIXHg8E"></lite-youtube></td>
+        <td><lite-youtube videoid="BSYAPKgcgj0"></lite-youtube></td>
+        <td><lite-youtube videoid="Z2fOOIXHg8E"></lite-youtube></td>
+    </tr>
+    <tr>
+        <td><lite-youtube videoid="ttIWmYaknCg"></lite-youtube></td>
+        <td><lite-youtube videoid="t05rpOyQK4k"></lite-youtube></td>
     </tr>
 </table>
-<script>
-    // Array to hold references to playing lite-youtube elements
-    let playingVideos = [];
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Select all lite-youtube elements
-        const videos = document.querySelectorAll('lite-youtube');
-
-        videos.forEach(video => {
-            // Add click event listener to each lite-youtube element
-            video.addEventListener('click', () => {
-                // Stop other videos from playing
-                stopAllVideosExcept(video);
-            });
-        });
-    });
-
-    // Function to stop all videos except the one that was clicked
-    function stopAllVideosExcept(activeVideo) {
-        document.querySelectorAll('lite-youtube').forEach(video => {
-            if (video !== activeVideo) {
-                video.removeAttribute('playing'); // This assumes you control the state via 'playing' attribute
-            }
-        });
-    }
-</script>
 </body>
 </html>
