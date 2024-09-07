@@ -1,2 +1,2 @@
 # Flaskmovies
-A place to watch free movies on YouTube.
+A library of free movies/shortfilms from YouTube.
