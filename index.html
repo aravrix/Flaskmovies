@@ -18,29 +18,29 @@
             padding: 10px;
             font-size: 16px;
             border-radius: 4px;
-            border: 1px solid #ccc;
+            border: 1px solid #006ac7;
         }
         .search-container button {
             padding: 10px 15px;
             font-size: 16px;
             border-radius: 4px;
-            border: 1px solid #ccc;
-            background-color: #f0f0f0;
+            border: 1px solid #006ba4;
+            background-color: #465aa3;
             cursor: pointer;
         }
         .search-container button:hover {
-            background-color: #ddd;
+            background-color: #7571b9;
         }
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search videos...">
-        <button onclick="searchVideos()">Search</button>
-    </div>
     <div class="Text">
         <h1 class="logo">Flaskmovies</h1>
         <b>Always free! 100% Legal</b>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search Movies...">
+        <button onclick="searchVideos()"><b>Go!</b></button>
     </div>
     <br>
     <div class="video-container">
@@ -64,7 +64,9 @@
         <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
         <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
     </div>
-
+      
+   
+    
     <script>
         class LiteYTEmbed extends HTMLElement {
             static currentVideo = null;  // Track the currently playing video
@@ -185,6 +187,25 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
