@@ -115,3 +115,25 @@ lite-youtube.lyt-activated > .lty-playbtn {
         grid-template-columns: 1fr;
     }
 }
+   /* Add some basic styles */
+   .search-container {
+    margin: 20px;
+    text-align: center;
+}
+.search-container input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #006ac7;
+}
+.search-container button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #006ba4;
+    background-color: #465aa3;
+    cursor: pointer;
+}
+.search-container button:hover {
+    background-color: #7571b9;
+}
