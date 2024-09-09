@@ -8,33 +8,61 @@
     <title>Flaskmovies - Watch movies and shortfilms for free | 100% Legal</title>
     <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
     <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
+    <style>
+        /* Add some basic styles */
+        .search-container {
+            margin: 20px;
+            text-align: center;
+        }
+        .search-container input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .search-container button:hover {
+            background-color: #ddd;
+        }
+    </style>
 </head>
 <body>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search videos...">
+        <button onclick="searchVideos()">Search</button>
+    </div>
     <div class="Text">
         <h1 class="logo">Flaskmovies</h1>
         <b>Always free! 100% Legal</b>
     </div>
     <br>
     <div class="video-container">
-        <lite-youtube videoid="takrce_4Fhw"></lite-youtube>
-        <lite-youtube videoid="_pxyd9-ZRn8"></lite-youtube>
-        <lite-youtube videoid="CQX6e1L0KRw"></lite-youtube>
-        <lite-youtube videoid="yI50AwTDpiU"></lite-youtube>
-        <lite-youtube videoid="ytPPunDiLBc"></lite-youtube>
-        <lite-youtube videoid="lNYTPjZxg5k"></lite-youtube>
-        <lite-youtube videoid="UvqQSZduj-I"></lite-youtube>
-        <lite-youtube videoid="ubW9OMrXjKg"></lite-youtube>
-        <lite-youtube videoid="VEVm0OcA1mI"></lite-youtube>
-        <lite-youtube videoid="CGFrjDAx638"></lite-youtube>
-        <lite-youtube videoid="d8Vz8FTH_pQ"></lite-youtube>
-        <lite-youtube videoid="I_QqpJTKJHE"></lite-youtube>
-        <lite-youtube videoid="atnW4D6pc-w"></lite-youtube>
-        <lite-youtube videoid="BSYAPKgcgj0"></lite-youtube>
-        <lite-youtube videoid="Z2fOOIXHg8E"></lite-youtube>
-        <lite-youtube videoid="ttIWmYaknCg"></lite-youtube>
-        <lite-youtube videoid="t05rpOyQK4k"></lite-youtube>
-        <lite-youtube videoid="Nm5acz1LSOc"></lite-youtube>
-        <lite-youtube videoid="OrOYvVf6tIM"></lite-youtube>
+        <lite-youtube videoid="takrce_4Fhw" title="Hollow | Horror Film"></lite-youtube>
+        <lite-youtube videoid="_pxyd9-ZRn8" title="My Guardian Angel | Full Movie | Eerie Thriller Drama"></lite-youtube>
+        <lite-youtube videoid="CQX6e1L0KRw" title="‘Maria Leonora Teresa’ FULL MOVIE | Zanjoe Marudo, Jodi Sta. Maria, Iza Calzado"></lite-youtube>
+        <lite-youtube videoid="yI50AwTDpiU" title="PENDATANG (2023) full movie"></lite-youtube>
+        <lite-youtube videoid="ytPPunDiLBc" title="The Donor - Full Movie"></lite-youtube>
+        <lite-youtube videoid="lNYTPjZxg5k" title="'Hello Stranger: The Movie' FULL MOVIE | Tony Labrusca, JC Alcantara"></lite-youtube>
+        <lite-youtube videoid="UvqQSZduj-I" title="Flight666 - Hell at 10,000 meters above sea level - Free movies"></lite-youtube>
+        <lite-youtube videoid="ubW9OMrXjKg" title="OUIJA HOUSE - FULL HD HORROR MOVIE IN ENGLISH"></lite-youtube>
+        <lite-youtube videoid="VEVm0OcA1mI" title="Stalked By My Neighbor - Full Movie"></lite-youtube>
+        <lite-youtube videoid="CGFrjDAx638" title="The Mime | Short Horror Film"></lite-youtube>
+        <lite-youtube videoid="d8Vz8FTH_pQ" title="【English Dubbed】Eye for an Eye: The Blind Swordsman | A hit martial arts film! | Action Martial Arts"></lite-youtube>
+        <lite-youtube videoid="I_QqpJTKJHE" title="【FULL MOVIE】Flame Bride | Dominant Marshal fell for the Stubborn Bride | 烈焰新娘"></lite-youtube>
+        <lite-youtube videoid="atnW4D6pc-w" title="Conjuring the Beyond | Full Exorcism Horror Movie | Horror Central"></lite-youtube>
+        <lite-youtube videoid="BSYAPKgcgj0" title="THE IMOM | Omeleto"></lite-youtube>
+        <lite-youtube videoid="Z2fOOIXHg8E" title="The ALTER Files: Dental Disasters"></lite-youtube>
+        <lite-youtube videoid="ttIWmYaknCg" title="[MULTI SUB]Full Movie《Immortal Fate》|action|Original version without cuts|#SixStarCinema🎬"></lite-youtube>
+        <lite-youtube videoid="t05rpOyQK4k" title="【ENG SUB】Under the Three Rivers | Adventure/Action | Chinese Online Movie Channel"></lite-youtube>
+        <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
+        <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
     </div>
 
     <script>
@@ -43,6 +71,7 @@
 
             connectedCallback() {
                 this.videoId = this.getAttribute('videoid');
+                this.title = this.getAttribute('title') || "";
 
                 let playBtnEl = this.querySelector('.lty-playbtn');
                 this.playLabel = (playBtnEl && playBtnEl.textContent.trim()) || this.getAttribute('playlabel') || 'Play';
@@ -131,6 +160,36 @@
         }
 
         customElements.define('lite-youtube', LiteYTEmbed);
+
+        function searchVideos() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const videos = document.querySelectorAll('.video-container lite-youtube');
+
+            videos.forEach(video => {
+                const title = video.title.toLowerCase();
+                if (title.includes(searchInput) || searchInput === '') {
+                    video.style.display = 'block';
+                } else {
+                    video.style.display = 'none';
+                }
+            });
+        }
+
+        // Add event listener for Enter key in the search input
+        document.getElementById('searchInput').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();  // Prevent form submission if inside a form
+                searchVideos();
+            }
+        });
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
