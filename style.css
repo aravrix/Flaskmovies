@@ -14,12 +14,7 @@ body {
 .Text {
     color: #000000;
     text-align: center;
-    font-family: 'Arial', sans-serif;
-a:focus, a:active {
-  outline: none;
-  box-shadow: none;
-}
-
+    font-family: 'Arial', sans-serif;}
 
 .video-container {
     display: grid;
