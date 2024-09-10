@@ -20,6 +20,17 @@
         <button onclick="searchVideos()"><b>Go!</b></button>
     </div>
     <br>
+
+    <!-- "Uh oh, no results found" message -->
+    <div class="no-results" id="noResults" style="display: none; text-align: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
+            <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/>
+            <path d="M4 8c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm6 0c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm1 4a5.978 5.978 0 0 0-6 0 .5.5 0 1 0 .615.789A4.978 4.978 0 0 1 8 12c1.222 0 2.392.441 3.385 1.211a.5.5 0 1 0 .615-.789 5.978 5.978 0 0 0-3-1z"/>
+        </svg>
+        <p>Uh oh, No results found!</p>
+    </div>
+
+    <!-- Video container -->
     <div class="video-container">
         <lite-youtube videoid="takrce_4Fhw" title="Hollow | Horror Film"></lite-youtube>
         <lite-youtube videoid="_pxyd9-ZRn8" title="My Guardian Angel | Full Movie | Eerie Thriller Drama"></lite-youtube>
@@ -41,129 +52,192 @@
         <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
         <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
     </div>
-      
-   
-    
+
     <script>
         class LiteYTEmbed extends HTMLElement {
-            static currentVideo = null;  // Track the currently playing video
-
+            static currentVideo = null;
+    
             connectedCallback() {
                 this.videoId = this.getAttribute('videoid');
                 this.title = this.getAttribute('title') || "";
-
-                let playBtnEl = this.querySelector('.lty-playbtn');
-                this.playLabel = (playBtnEl && playBtnEl.textContent.trim()) || this.getAttribute('playlabel') || 'Play';
-
-                this.dataset.title = this.getAttribute('title') || "";
-
+                this.playLabel = this.getAttribute('playlabel') || 'Play';
+                this.dataset.title = this.title;
+    
+                // Setup the background image
                 if (!this.style.backgroundImage) {
                     this.style.backgroundImage = `url("https://i.ytimg.com/vi/${this.videoId}/hqdefault.jpg")`;
                     this.upgradePosterImage();
                 }
-
+    
+                let playBtnEl = this.querySelector('.lty-playbtn');
                 if (!playBtnEl) {
                     playBtnEl = document.createElement('button');
                     playBtnEl.type = 'button';
                     playBtnEl.classList.add('lty-playbtn');
                     this.append(playBtnEl);
                 }
-
+    
                 if (!playBtnEl.textContent) {
                     const playBtnLabelEl = document.createElement('span');
                     playBtnLabelEl.className = 'lyt-visually-hidden';
                     playBtnLabelEl.textContent = this.playLabel;
                     playBtnEl.append(playBtnLabelEl);
                 }
-
+    
                 this.addNoscriptIframe();
-
                 playBtnEl.addEventListener('click', this.activate.bind(this));
             }
-
+    
             addNoscriptIframe() {
                 const iframeEl = this.createBasicIframe();
                 const noscriptEl = document.createElement('noscript');
                 noscriptEl.innerHTML = iframeEl.outerHTML;
                 this.append(noscriptEl);
             }
-
-            createBasicIframe() {
+    
+            createBasicIframe(startTime = 0) {
                 const iframeEl = document.createElement('iframe');
                 iframeEl.width = 560;
                 iframeEl.height = 315;
                 iframeEl.title = this.playLabel;
                 iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
                 iframeEl.allowFullscreen = true;
-                iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(this.videoId)}?autoplay=1&playsinline=1`;
+                iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(this.videoId)}?autoplay=1&playsinline=1&start=${startTime}`;
+    
+                iframeEl.onload = () => this.monitorVideo(iframeEl);
+    
                 return iframeEl;
             }
-
+    
+            monitorVideo(iframe) {
+                const videoId = this.videoId;
+                const iframeWindow = iframe.contentWindow;
+    
+                const interval = setInterval(() => {
+                    if (LiteYTEmbed.currentVideo !== this) {
+                        clearInterval(interval);
+                        return;
+                    }
+    
+                    iframeWindow.postMessage('{"event":"listening"}', '*');
+    
+                    window.addEventListener('message', (event) => {
+                        if (event.data && typeof event.data === 'string') {
+                            try {
+                                const data = JSON.parse(event.data);
+                                if (data.info && data.info.currentTime) {
+                                    const currentTime = data.info.currentTime;
+                                    localStorage.setItem(`yt_${videoId}_progress`, currentTime);
+    
+                                    if (currentTime >= data.info.duration) {
+                                        this.resetVideo();
+                                        clearInterval(interval);
+                                    }
+                                }
+                            } catch (error) {}
+                        }
+                    });
+                }, 1000);
+            }
+    
+            resetVideo() {
+                const iframe = this.querySelector('iframe');
+                if (iframe) {
+                    iframe.src = '';
+                    iframe.remove();
+                }
+    
+                localStorage.removeItem(`yt_${this.videoId}_progress`);
+                this.classList.remove('lyt-activated');
+            }
+    
             async activate() {
                 if (this.classList.contains('lyt-activated')) return;
                 this.classList.add('lyt-activated');
-
+    
                 if (LiteYTEmbed.currentVideo && LiteYTEmbed.currentVideo !== this) {
-                    LiteYTEmbed.currentVideo.stopVideo();  // Stop the currently playing video
+                    LiteYTEmbed.currentVideo.stopVideo();
                 }
-
-                const iframeEl = this.createBasicIframe();
+    
+                const savedProgress = localStorage.getItem(`yt_${this.videoId}_progress`);
+                const startTime = savedProgress ? Math.floor(savedProgress) : 0;
+    
+                const iframeEl = this.createBasicIframe(startTime);
                 this.append(iframeEl);
-
+    
                 iframeEl.focus();
-                LiteYTEmbed.currentVideo = this;  // Set the current video to the one being activated
+                LiteYTEmbed.currentVideo = this;
             }
-
+    
             stopVideo() {
                 const iframe = this.querySelector('iframe');
                 if (iframe) {
-                    iframe.src = '';  // Reset the iframe src to stop the video
-                    iframe.remove();  // Optionally remove the iframe
+                    iframe.src = '';
+                    iframe.remove();
                     this.classList.remove('lyt-activated');
                 }
             }
-
+    
             upgradePosterImage() {
                 setTimeout(() => {
                     const webpUrl = `https://i.ytimg.com/vi_webp/${this.videoId}/sddefault.webp`;
                     const img = new Image();
                     img.fetchPriority = 'low';
                     img.src = webpUrl;
-                    img.onload = e => {
-                        const noAvailablePoster = e.target.naturalHeight == 90 && e.target.naturalWidth == 120;
-                        if (noAvailablePoster) return;
-                        this.style.backgroundImage = `url("${webpUrl}")`;
-                    }
-                }, 100);
+                    img.onload = () => {
+                        if (img.width >= 320) {
+                            this.style.backgroundImage = `url("${img.src}")`;
+                        }
+                    };
+                }, 300);
             }
         }
-
+    
         customElements.define('lite-youtube', LiteYTEmbed);
-
+    
         function searchVideos() {
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const videos = document.querySelectorAll('.video-container lite-youtube');
-
+            let resultsFound = false;
+    
             videos.forEach(video => {
                 const title = video.title.toLowerCase();
                 if (title.includes(searchInput) || searchInput === '') {
                     video.style.display = 'block';
+                    resultsFound = true;
                 } else {
                     video.style.display = 'none';
                 }
             });
+    
+            const noResultsElement = document.getElementById('noResults');
+            if (resultsFound) {
+                noResultsElement.style.display = 'none';
+            } else {
+                noResultsElement.style.display = 'block';
+            }
         }
-
+    
         // Add event listener for Enter key in the search input
         document.getElementById('searchInput').addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault();  // Prevent form submission if inside a form
+                event.preventDefault();
                 searchVideos();
             }
         });
+    
+        // Stop video playback when the search input is clicked
+        document.getElementById('searchInput').addEventListener('click', function() {
+            if (LiteYTEmbed.currentVideo) {
+                LiteYTEmbed.currentVideo.stopVideo();  // Stop the currently playing video
+            }
+        });
     </script>
+    
+    
 </body>
 </html>
+
 
 
 
