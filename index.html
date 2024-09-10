@@ -52,7 +52,6 @@
         <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
         <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
     </div>
-
     <script>
         class LiteYTEmbed extends HTMLElement {
             static currentVideo = null;
@@ -226,14 +225,7 @@
             }
         });
     
-        // Stop video playback when the search input is clicked
-        document.getElementById('searchInput').addEventListener('click', function() {
-            if (LiteYTEmbed.currentVideo) {
-                LiteYTEmbed.currentVideo.stopVideo();  // Stop the currently playing video
-            }
-        });
     </script>
-    
     
 </body>
 </html>
