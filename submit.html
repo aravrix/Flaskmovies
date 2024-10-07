@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flaskmovies - Submit a YouTube Video</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 36px;
+            color: darkred;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: darkred;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #a30000;
+        }
+
+        .form-container {
+            margin-top: 30px;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 10px;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://flaskmovies.pages.dev/" style="text-decoration: none;">
+            <h1 class="logo">Flaskmovies</h1>
+        </a>
+        <h1>Submit a YouTube Video</h1>
+        <form id="videoForm" class="form-container">
+            <label for="videoLink">YouTube Video Link:</label>
+            <input type="text" id="videoLink" name="videoLink" placeholder="Paste the YouTube link here..." required>
+
+            <label for="videoTitle">Video Title:</label>
+            <input type="text" id="videoTitle" name="videoTitle" placeholder="Enter the video title..." required>
+
+            <button type="submit">Submit Video</button>
+        </form>
+        <div id="responseMessage" class="message"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('videoForm');
+        const responseMessage = document.getElementById('responseMessage');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const videoLink = document.getElementById('videoLink').value;
+            const videoTitle = document.getElementById('videoTitle').value;
+
+            const data = {
+                videoLink: videoLink,
+                videoTitle: videoTitle
+            };
+
+            try {
+                const response = await fetch('/submit-video', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.text();
+                if (response.ok) {
+                    responseMessage.textContent = 'Video added successfully!';
+                    responseMessage.classList.remove('error');
+                } else {
+                    responseMessage.textContent = 'Error: ' + result;
+                    responseMessage.classList.add('error');
+                }
+            } catch (error) {
+                responseMessage.textContent = 'An error occurred: ' + error.message;
+                responseMessage.classList.add('error');
+            }
+
+            form.reset();
+        });
+    </script>
+</body>
+</html>
