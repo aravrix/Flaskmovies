@@ -89,7 +89,6 @@
             <div id="responseMessage" class="message"></div>
         </div>
     </div>
-    
     <script>
         const form = document.getElementById('videoForm');
         const responseMessage = document.getElementById('responseMessage');
@@ -117,15 +116,12 @@
                 if (response.ok) {
                     responseMessage.textContent = 'Video added successfully!';
                     responseMessage.classList.remove('error');
-                    responseMessage.classList.add('success');
                 } else {
                     responseMessage.textContent = 'Error: ' + result;
-                    responseMessage.classList.remove('success');
                     responseMessage.classList.add('error');
                 }
             } catch (error) {
                 responseMessage.textContent = 'An error occurred: ' + error.message;
-                responseMessage.classList.remove('success');
                 responseMessage.classList.add('error');
             }
 
