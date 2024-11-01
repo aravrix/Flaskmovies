@@ -31,7 +31,7 @@ lite-youtube {
     background-position: center center;
     background-size: cover;
     cursor: pointer;
-    border: 7px solid rgba(0, 145, 255, 0.845);
+    border: 7px solid rgba(0, 110, 255, 0.845);
     padding-bottom: calc(100% / (16 / 9)); /* Maintain 16:9 aspect ratio */
 }
 

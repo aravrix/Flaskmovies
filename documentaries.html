@@ -5,14 +5,104 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flaskmovies - Watch movies and shortfilms for free | 100% Legal</title>
-    <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
+    <title>Flaskmovies - Watch documentaries for free | 100% Legal</title>
+    <meta name="description" content="Explore a diverse range of free and legal documentaries available on YouTube. Enjoy high-quality documentaries without spending a dime. Start watching now!">
     <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
 </head>
+<style>
+    /* Popup container styling */
+    .popup-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* Popup content styling */
+    .popup-content {
+    font-family: 'Arial', sans-serif;
+      background-color: white;
+      border: 7px solid rgb(38, 41, 136);
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    /* Warning text styling */
+    .popup-content h2 {
+      color: black;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    /* Warning icon styling */
+    .warning-icon {
+      font-size: 4em;
+      color: red;
+    }
+
+    /* Accept button styling */
+    .accept-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: rgba(33, 38, 179, 0.873);
+      color: rgb(0, 0, 0);
+      font-size: 1.1em;
+      font-weight: 550;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  </style>
+</head>
 <body>
+  
+  <div class="popup-container" id="agePopup">
+    <div class="popup-content">
+      <div class="warning-icon">⚠️</div>
+      <h2>This website contains materials not suitable for people below the age of 13. <br> <br> Viewer discretion is advised.</h2>
+      <button class="accept-btn" onclick="acceptWarning()">I Understand</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to check and set cookie
+    function checkCookie() {
+      return document.cookie.split('; ').find(row => row.startsWith('ageWarningAccepted='));
+    }
+
+    function setCookie() {
+      const date = new Date();
+      date.setTime(date.getTime() + (365*24*60*60*1000)); // 1 year
+      document.cookie = "ageWarningAccepted=true; expires=" + date.toUTCString() + "; path=/";
+    }
+
+    // Show popup if cookie not found
+    if (!checkCookie()) {
+      document.getElementById("agePopup").style.display = "flex";
+    }
+
+    // Hide popup and set cookie on acceptance
+    function acceptWarning() {
+      setCookie();
+      document.getElementById("agePopup").style.display = "none";
+    }
+  </script>
+
+<body>
+     <!-- Main Page Content -->
+  <div class="content" id="mainContent">
     <div class="Text">
-  <a href="https://flaskmovies.pages.dev/"
- style="text-decoration: none;"> <h1 class="logo">Flaskmovies</h1></a>
+  <a href="/documentaries.html"
+ style="text-decoration: none;"> <h1 class="logo">Flaskmovies Documentaries</h1></a>
         <b>Always free! 100% Legal</b>
     </div>
     <div style="text-align:center; width:100%; background-color: f9f9f; color: black; padding: 6px; font-family: 'Arial', sans-serif">
@@ -26,7 +116,6 @@
     </div>
     <br>
 
-
     <!-- "Uh oh, no results found" message -->
     <div class="no-results" id="noResults" style="display: none; text-align: center;">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
@@ -38,41 +127,18 @@
     
     <!-- Video container -->
     <div class="video-container">
-        <lite-youtube videoid="WpkLtCOuM00" title="Full Version | The spy in the contract marriage | [A Love Journal]"></lite-youtube>
-        <lite-youtube videoid="sZ2zD0lo2ps" title="The Girl He Never Noticed | Romantic movie"></lite-youtube>
-        <lite-youtube videoid="7STTBgddaFc" title="SILVER REVOLVER - Hollywood English Action Movie | New Action Thriller Movies | Jason Statham"></lite-youtube>
-        <lite-youtube videoid="xQ-EuIC3eGQ" title="My Secret Billionaire | ROMANCE | Free Movie | Drama Film"></lite-youtube>
-        <lite-youtube videoid="FqfbvfzrHxc" title="Go Back to China with Anna Akana - FULL MOVIE - Comedy, Drama, Asian American"></lite-youtube>
-        <lite-youtube videoid="POP_Xf6HvMA" title="First Daughter | Full Movie | Rapid Response"></lite-youtube>
-        <lite-youtube videoid="o_f6iWSOsYQ" title="A Rose and a Tulip Full Movie (English Subbed)"></lite-youtube>
-        <lite-youtube videoid="ZjCJBU_Dbyo" title="My Mom Robs Banks - Full Movie"></lite-youtube>
-        <lite-youtube videoid="6jvqXxt3WNo" title="Not Cinderella's Type (2018) | Full Movie | Paris Warner | Tim Flynn | Tanner Gillman"></lite-youtube>
-        <lite-youtube videoid="ATi3GdospAo" title="Child Remains (2019) | Full Horror Movie | Suzanne Clement | Allan Hawco | Shelley Thompson"></lite-youtube>
-        <lite-youtube videoid="07iXXR5536k" title="【ENG SUB】My Happy Marriage 2023 【Japanese Full Movie】 || As Long As We Both Shall"></lite-youtube>
-        <lite-youtube videoid="qBczncM0ntk" title="Beauty And The Billionaire (2022) | Full Movie | Sashleigha Hightower | Chris Reid"></lite-youtube>
-        <lite-youtube videoid="Ma6HhbxnI2M" title="Horror Short Film 'Kalley's Last Review' | ALTER"></lite-youtube>
-        <lite-youtube videoid="iYefshjHv04" title="[18+] GAY SHORT FILM - Signs of Love"></lite-youtube>
-        <lite-youtube videoid="flP2oQsy5IY" title="Home Abduction - Full Movie"></lite-youtube>
-        <lite-youtube videoid="takrce_4Fhw" title="Hollow | Horror Film"></lite-youtube>
-        <lite-youtube videoid="_pxyd9-ZRn8" title="My Guardian Angel | Full Movie | Eerie Thriller Drama"></lite-youtube>
-        <lite-youtube videoid="CQX6e1L0KRw" title="‘Maria Leonora Teresa’ FULL MOVIE | Zanjoe Marudo, Jodi Sta. Maria, Iza Calzado"></lite-youtube>
-        <lite-youtube videoid="yI50AwTDpiU" title="PENDATANG (2023) full movie"></lite-youtube>
-        <lite-youtube videoid="ytPPunDiLBc" title="The Donor - Full Movie"></lite-youtube>
-        <lite-youtube videoid="lNYTPjZxg5k" title="'Hello Stranger: The Movie' FULL MOVIE | Tony Labrusca, JC Alcantara"></lite-youtube>
-        <lite-youtube videoid="UvqQSZduj-I" title="Flight666 - Hell at 10,000 meters above sea level - Free movies"></lite-youtube>
-        <lite-youtube videoid="ubW9OMrXjKg" title="OUIJA HOUSE - FULL HD HORROR MOVIE IN ENGLISH"></lite-youtube>
-        <lite-youtube videoid="VEVm0OcA1mI" title="Stalked By My Neighbor - Full Movie"></lite-youtube>
-        <lite-youtube videoid="CGFrjDAx638" title="The Mime | Short Horror Film"></lite-youtube>
-        <lite-youtube videoid="d8Vz8FTH_pQ" title="【English Dubbed】Eye for an Eye: The Blind Swordsman | A hit martial arts film! | Action Martial Arts"></lite-youtube>
-        <lite-youtube videoid="I_QqpJTKJHE" title="【FULL MOVIE】Flame Bride | Dominant Marshal fell for the Stubborn Bride | 烈焰新娘"></lite-youtube>
-        <lite-youtube videoid="atnW4D6pc-w" title="Conjuring the Beyond | Full Exorcism Horror Movie | Horror Central"></lite-youtube>
-        <lite-youtube videoid="BSYAPKgcgj0" title="THE IMOM | Omeleto"></lite-youtube>
-        <lite-youtube videoid="Z2fOOIXHg8E" title="The ALTER Files: Dental Disasters"></lite-youtube>
-        <lite-youtube videoid="ttIWmYaknCg" title="[MULTI SUB]Full Movie《Immortal Fate》|action|Original version without cuts|#SixStarCinema🎬"></lite-youtube>
-        <lite-youtube videoid="t05rpOyQK4k" title="【ENG SUB】Under the Three Rivers | Adventure/Action | Chinese Online Movie Channel"></lite-youtube>
-        <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
-        <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
+        <lite-youtube videoid="uSuMOh_d9oc" title="Indian village midwives make a shocking confession - BBC World Service Documentaries"></lite-youtube>
+        <lite-youtube videoid="DKAusMNTNnk" title="Bride Kidnapping in Kyrgyzstan"></lite-youtube>
+        <lite-youtube videoid="STe13RT238E" title="I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible"></lite-youtube>
+        <lite-youtube videoid="XY7QOlqirns" title="A Crime Unpunished: Bangladeshi Gang Rape"></lite-youtube>
+        <lite-youtube videoid="jj8SxLdk55E" title="The lives of sex workers and their children on G.B Road, New Delhi's biggest red-light district"></lite-youtube> 
+        <lite-youtube videoid="ew7-Z2xCMgE" title="India's prostitution villages | DW Documentary"></lite-youtube>
+        <lite-youtube videoid="22D7RFXfnfs" title="Pakistan's Open Secret I Transgender Documentary I Only Human"></lite-youtube>
+        <lite-youtube videoid="gqJo6kC5q_M" title="The marriage market for Indian HIV patients | DW Documentary"></lite-youtube>
+     
     </div>
+</div>
+
     <script>
         class LiteYTEmbed extends HTMLElement {
             static currentVideo = null;
@@ -250,111 +316,4 @@
     
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
