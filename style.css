@@ -316,7 +316,11 @@ iframe {
     flex-direction: column;
     gap: 15px; /* Spacing between buttons */
     width: 300px; /* Fixed width for buttons */
+    max-height: 80vh; /* Restrict the height to 80% of the viewport */
+    overflow-y: auto; /* Allow scrolling if there are more buttons */
+    padding: 10px;
     text-align: center;
+    scrollbar-width: none; /* Hide the scrollbar on Firefox */
 }
 
 /* Big button styling */
