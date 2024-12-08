@@ -1,319 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flaskmovies - Watch documentaries for free | 100% Legal</title>
-    <meta name="description" content="Explore a diverse range of free and legal documentaries available on YouTube. Enjoy high-quality documentaries without spending a dime. Start watching now!">
+    <title>Flaskmovies - Watch movies and shortfilms for free | 100% Legal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
     <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
-</head>
-<style>
-    /* Popup container styling */
-    .popup-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+    <style>
+        .lightbox-title.hidden {
+    display: none; /* Hide the title */
+}
+    
+        .search-container {
+            text-align: center;
+            margin: 20px;
+        }
 
-    /* Popup content styling */
-    .popup-content {
-    font-family: 'Arial', sans-serif;
-      background-color: white;
-      border: 7px solid rgb(38, 41, 136);
-      padding: 20px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      border-radius: 10px;
-    }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
 
-    /* Warning text styling */
-    .popup-content h2 {
-      color: black;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
+        .video-thumbnail {
+            position: relative;
+            margin: 10px;
+            cursor: pointer;
+            width: 480px; /* Thumbnail width */
+            height: 305px; /* Thumbnail height */
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #000; /* Fallback color */
+        }
 
-    /* Warning icon styling */
-    .warning-icon {
-      font-size: 4em;
-      color: red;
-    }
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area */
+        }
 
-    /* Accept button styling */
-    .accept-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: rgba(33, 38, 179, 0.873);
-      color: rgb(0, 0, 0);
-      font-size: 1.1em;
-      font-weight: 550;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-  </style>
+        .video-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            background: rgb(99, 126, 194);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .lightbox-title {
+            background: rgb(99, 126, 194);
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .lightbox.minimized {
+    width: 300px; /* Width of the minimized player */
+    height: 200px; /* Height of the minimized player */
+    position: fixed;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px; /* Position from the right */
+    z-index: 1001; /* Ensure it is above other content */
+}
+
+        iframe {
+    width: 100%; /* Full width of the container */
+    height: auto; /* Automatic height */
+    aspect-ratio: 16 / 9; /* Maintain a 16:9 aspect ratio */
+    max-width: 100%; /* Ensure it doesn't exceed the container */
+    margin: 0 auto; /* Center the iframe */
+}
+
+        .close, .minimize {
+            background-color: #000000; /* Stylish background */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .close:hover, .minimize:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+        }
+
+        /* Responsive styles */
+        @media (min-width: 768px) {
+            .video-container {
+                flex-direction: row;
+            }
+            .video-thumbnail {
+                width: calc(33.33% - 20px); /* Three thumbnails in a row */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .video-container {
+                flex-direction: column;
+            }
+            .video-thumbnail {
+                width: 100%; /* One thumbnail in a row */
+            }
+        }
+    </style>
 </head>
 <body>
-  
-  <div class="popup-container" id="agePopup">
-    <div class="popup-content">
-      <div class="warning-icon">⚠️</div>
-      <h2>This website contains materials not suitable for people below the age of 13. <br> <br> Viewer discretion is advised.</h2>
-      <button class="accept-btn" onclick="acceptWarning()">I Understand</button>
-    </div>
-  </div>
-
-  <script>
-    // Function to check and set cookie
-    function checkCookie() {
-      return document.cookie.split('; ').find(row => row.startsWith('ageWarningAccepted='));
-    }
-
-    function setCookie() {
-      const date = new Date();
-      date.setTime(date.getTime() + (365*24*60*60*1000)); // 1 year
-      document.cookie = "ageWarningAccepted=true; expires=" + date.toUTCString() + "; path=/";
-    }
-
-    // Show popup if cookie not found
-    if (!checkCookie()) {
-      document.getElementById("agePopup").style.display = "flex";
-    }
-
-    // Hide popup and set cookie on acceptance
-    function acceptWarning() {
-      setCookie();
-      document.getElementById("agePopup").style.display = "none";
-    }
-  </script>
-
-<body>
-     <!-- Main Page Content -->
+       <!-- Main Page Content -->
   <div class="content" id="mainContent">
     <div class="Text">
-  <a href="/documentaries.html"
- style="text-decoration: none;"> <h1 class="logo">Flaskmovies Documentaries</h1></a>
+     <a href="https://flaskmovies.pages.dev/" style="text-decoration: none;">
+            <h1 class="logo">Flaskmovies Documentaries</h1>
+        </a>
         <b>Always free! 100% Legal</b>
+        <br><br>
+        <b style="color: rgb(108, 11, 11);">Age Rating: PG-13</b>
     </div>
     <div style="text-align:center; width:100%; background-color: f9f9f; color: black; padding: 6px; font-family: 'Arial', sans-serif">
         <a href="/index.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-right: 5px;">Movies</a>
         <span style="color: black;">/</span>
         <a href="/documentaries.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-left: 5px;">Documentaries</a>
     </div>
+    </div>
     <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search Movies...">
-        <button onclick="searchVideos()"><b>Go!</b></button>
+        <input type="text" id="searchInput" placeholder="Search for documentaries..." onkeyup="filterVideos()">
     </div>
-    <br>
-
-    <!-- "Uh oh, no results found" message -->
-    <div class="no-results" id="noResults" style="display: none; text-align: center;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
-            <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/>
-            <path d="M4 8c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm6 0c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm1 4a5.978 5.978 0 0 0-6 0 .5.5 0 1 0 .615.789A4.978 4.978 0 0 1 8 12c1.222 0 2.392.441 3.385 1.211a.5.5 0 1 0 .615-.789 5.978 5.978 0 0 0-3-1z"/>
-        </svg>
-        <p>Uh oh, No results found!</p>
+    <div class="video-container" id="videoContainer">
+        <div class="video-thumbnail" onclick="openLightbox('YGSN2MTmzDQ', 'The Junko Furuta Case ...In Complete Detail')">
+            <img src="https://img.youtube.com/vi/YGSN2MTmzDQ/hqdefault.jpg" alt="The Junko Furuta Case ...In Complete Detail">
+            <div class="video-title">The Junko Furuta Case</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('-BpKixUKbU8', 'The Unspeakable Things That Happened In Unit 731')">
+            <img src="https://img.youtube.com/vi/-BpKixUKbU8/hqdefault.jpg" alt="The Unspeakable Things That Happened In Unit 731">
+            <div class="video-title">Unit 731: Unspeakable Things</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('4WrMfY2Mj2Y', 'This is Why Lobotomy is the Worst Surgery in History')">
+            <img src="https://img.youtube.com/vi/4WrMfY2Mj2Y/hqdefault.jpg" alt="This is Why Lobotomy is the Worst Surgery in History">
+            <div class="video-title">Why Lobotomy is the Worst Surgery</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('ZSXypSLfVN8', 'The Worst Punishments in Human History')">
+            <img src="https://img.youtube.com/vi/ZSXypSLfVN8/hqdefault.jpg" alt="The Worst Punishments in Human History">
+            <div class="video-title">The Worst Punishments in Human History</div>        
+        </div>        
+    <div class="video-thumbnail" onclick="openLightbox('uSuMOh_d9oc', 'Indian village midwives make a shocking confession - BBC World Service Documentaries')">
+        <img src="https://img.youtube.com/vi/uSuMOh_d9oc/hqdefault.jpg" alt="Indian village midwives make a shocking confession - BBC World Service Documentaries">
+        <div class="video-title">Indian village midwives make a shocking confession</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('DKAusMNTNnk', 'Bride Kidnapping in Kyrgyzstan')">
+        <img src="https://img.youtube.com/vi/DKAusMNTNnk/hqdefault.jpg" alt="Bride Kidnapping in Kyrgyzstan">
+        <div class="video-title">Bride Kidnapping in Kyrgyzstan</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('STe13RT238E', 'I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible')">
+        <img src="https://img.youtube.com/vi/STe13RT238E/hqdefault.jpg" alt="I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible">
+        <div class="video-title">I Was Sexually Assaulted By Over 70 Men</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('XY7QOlqirns', 'A Crime Unpunished: Bangladeshi Gang Rape')">
+        <img src="https://img.youtube.com/vi/XY7QOlqirns/hqdefault.jpg" alt="A Crime Unpunished: Bangladeshi Gang Rape">
+        <div class="video-title">A Crime Unpunished: Bangladeshi Gang Rape</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('jj8SxLdk55E', 'The lives of sex workers and their children on G.B Road, New Delhi\'s biggest red-light district')">
+        <img src="https://img.youtube.com/vi/jj8SxLdk55E/hqdefault.jpg" alt="The lives of sex workers and their children on G.B Road, New Delhi's biggest red-light district">
+        <div class="video-title">The lives of sex workers and their children</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ew7-Z2xCMgE', 'India\'s prostitution villages | DW Documentary')">
+        <img src="https://img.youtube.com/vi/ew7-Z2xCMgE/hqdefault.jpg" alt="India's prostitution villages | DW Documentary">
+        <div class="video-title">India's prostitution villages</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('22D7RFXfnfs', 'Pakistan\'s Open Secret I Transgender Documentary I Only Human')">
+        <img src="https://img.youtube.com/vi/22D7RFXfnfs/hqdefault.jpg" alt="Pakistan's Open Secret I Transgender Documentary I Only Human">
+        <div class="video-title">Pakistan's Open Secret</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('gqJo6kC5q_M', 'The marriage market for Indian HIV patients | DW Documentary')">
+        <img src="https://img.youtube.com/vi/gqJo6kC5q_M/hqdefault.jpg" alt="The marriage market for Indian HIV patients | DW Documentary">
+        <div class="video-title">The marriage market for Indian HIV patients</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('EB-HY5T5TEI', 'Sex addiction: Five times a day wasn\'t enough - BBC News')">
+        <img src="https://img.youtube.com/vi/EB-HY5T5TEI/hqdefault.jpg" alt="Sex addiction: Five times a day wasn't enough - BBC News">
+        <div class="video-title">Sex addiction: Five times a day wasn't enough</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('zZrL8q2IDWg', 'Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates')">
+        <img src="https://img.youtube.com/vi/zZrL8q2IDWg/hqdefault.jpg" alt="Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates">
+        <div class="video-title">Face to Face With Former ISIS Sex Slaves</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('o9X9jBxWyO8', 'Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655')">
+        <img src="https://img.youtube.com/vi/o9X9jBxWyO8/hqdefault.jpg" alt="Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655">
+        <div class="video-title">Anything but a Mother: The Dark Side of Mother Teresa</div>
     </div>
     
-    <!-- Video container -->
-    <div class="video-container">
-        <lite-youtube videoid="uSuMOh_d9oc" title="Indian village midwives make a shocking confession - BBC World Service Documentaries"></lite-youtube>
-        <lite-youtube videoid="DKAusMNTNnk" title="Bride Kidnapping in Kyrgyzstan"></lite-youtube>
-        <lite-youtube videoid="STe13RT238E" title="I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible"></lite-youtube>
-        <lite-youtube videoid="XY7QOlqirns" title="A Crime Unpunished: Bangladeshi Gang Rape"></lite-youtube>
-        <lite-youtube videoid="jj8SxLdk55E" title="The lives of sex workers and their children on G.B Road, New Delhi's biggest red-light district"></lite-youtube> 
-        <lite-youtube videoid="ew7-Z2xCMgE" title="India's prostitution villages | DW Documentary"></lite-youtube>
-        <lite-youtube videoid="22D7RFXfnfs" title="Pakistan's Open Secret I Transgender Documentary I Only Human"></lite-youtube>
-        <lite-youtube videoid="gqJo6kC5q_M" title="The marriage market for Indian HIV patients | DW Documentary"></lite-youtube>
-     
-    </div>
+    
+    
 </div>
-
+    </div>
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-title">Now Playing</div>
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="divider"></div>
+            <button class="minimize" id="minimizeButton" onclick="minimizePlayer()">Minimize</button>
+                        <button class="close" onclick="closeLightbox()">Close</button>
+        </div>
+    </div>
     <script>
-        class LiteYTEmbed extends HTMLElement {
-            static currentVideo = null;
-    
-            connectedCallback() {
-                this.videoId = this.getAttribute('videoid');
-                this.title = this.getAttribute('title') || "";
-                this.playLabel = this.getAttribute('playlabel') || 'Play';
-                this.dataset.title = this.title;
-    
-                // Setup the background image
-                if (!this.style.backgroundImage) {
-                    this.style.backgroundImage = `url("https://i.ytimg.com/vi/${this.videoId}/hqdefault.jpg")`;
-                    this.upgradePosterImage();
-                }
-    
-                let playBtnEl = this.querySelector('.lty-playbtn');
-                if (!playBtnEl) {
-                    playBtnEl = document.createElement('button');
-                    playBtnEl.type = 'button';
-                    playBtnEl.classList.add('lty-playbtn');
-                    this.append(playBtnEl);
-                }
-    
-                if (!playBtnEl.textContent) {
-                    const playBtnLabelEl = document.createElement('span');
-                    playBtnLabelEl.className = 'lyt-visually-hidden';
-                    playBtnLabelEl.textContent = this.playLabel;
-                    playBtnEl.append(playBtnLabelEl);
-                }
-    
-                this.addNoscriptIframe();
-                playBtnEl.addEventListener('click', this.activate.bind(this));
-            }
-    
-            addNoscriptIframe() {
-                const iframeEl = this.createBasicIframe();
-                const noscriptEl = document.createElement('noscript');
-                noscriptEl.innerHTML = iframeEl.outerHTML;
-                this.append(noscriptEl);
-            }
-    
-            createBasicIframe(startTime = 0) {
-                const iframeEl = document.createElement('iframe');
-                iframeEl.width = 560;
-                iframeEl.height = 315;
-                iframeEl.title = this.playLabel;
-                iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-                iframeEl.allowFullscreen = true;
-                iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(this.videoId)}?autoplay=1&playsinline=1&start=${startTime}`;
-    
-                iframeEl.onload = () => this.monitorVideo(iframeEl);
-    
-                return iframeEl;
-            }
-    
-            monitorVideo(iframe) {
-                const videoId = this.videoId;
-                const iframeWindow = iframe.contentWindow;
-    
-                const interval = setInterval(() => {
-                    if (LiteYTEmbed.currentVideo !== this) {
-                        clearInterval(interval);
-                        return;
-                    }
-    
-                    iframeWindow.postMessage('{"event":"listening"}', '*');
-    
-                    window.addEventListener('message', (event) => {
-                        if (event.data && typeof event.data === 'string') {
-                            try {
-                                const data = JSON.parse(event.data);
-                                if (data.info && data.info.currentTime) {
-                                    const currentTime = data.info.currentTime;
-                                    localStorage.setItem(`yt_${videoId}_progress`, currentTime);
-    
-                                    if (currentTime >= data.info.duration) {
-                                        this.resetVideo();
-                                        clearInterval(interval);
-                                    }
-                                }
-                            } catch (error) {}
-                        }
-                    });
-                }, 1000);
-            }
-    
-            resetVideo() {
-                const iframe = this.querySelector('iframe');
-                if (iframe) {
-                    iframe.src = '';
-                    iframe.remove();
-                }
-    
-                localStorage.removeItem(`yt_${this.videoId}_progress`);
-                this.classList.remove('lyt-activated');
-            }
-    
-            async activate() {
-                if (this.classList.contains('lyt-activated')) return;
-                this.classList.add('lyt-activated');
-    
-                if (LiteYTEmbed.currentVideo && LiteYTEmbed.currentVideo !== this) {
-                    LiteYTEmbed.currentVideo.stopVideo();
-                }
-    
-                const savedProgress = localStorage.getItem(`yt_${this.videoId}_progress`);
-                const startTime = savedProgress ? Math.floor(savedProgress) : 0;
-    
-                const iframeEl = this.createBasicIframe(startTime);
-                this.append(iframeEl);
-    
-                iframeEl.focus();
-                LiteYTEmbed.currentVideo = this;
-            }
-    
-            stopVideo() {
-                const iframe = this.querySelector('iframe');
-                if (iframe) {
-                    iframe.src = '';
-                    iframe.remove();
-                    this.classList.remove('lyt-activated');
-                }
-            }
-    
-            upgradePosterImage() {
-                setTimeout(() => {
-                    const webpUrl = `https://i.ytimg.com/vi_webp/${this.videoId}/sddefault.webp`;
-                    const img = new Image();
-                    img.fetchPriority = 'low';
-                    img.src = webpUrl;
-                    img.onload = () => {
-                        if (img.width >= 320) {
-                            this.style.backgroundImage = `url("${img.src}")`;
-                        }
-                    };
-                }, 300);
-            }
+        function openLightbox(videoId, title) {
+            document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
         }
-    
-        customElements.define('lite-youtube', LiteYTEmbed);
-    
-        function searchVideos() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const videos = document.querySelectorAll('.video-container lite-youtube');
-            let resultsFound = false;
-    
-            videos.forEach(video => {
-                const title = video.title.toLowerCase();
-                if (title.includes(searchInput) || searchInput === '') {
-                    video.style.display = 'block';
-                    resultsFound = true;
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.getElementById('videoFrame').src = ''; // Stop the video
+        }
+
+        function minimizePlayer() {
+            // Logic to minimize the player
+            alert('Minimize functionality to be implemented.');
+        }
+
+        function filterVideos() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const videoContainer = document.getElementById('videoContainer');
+            const videoThumbnails = videoContainer.getElementsByClassName('video-thumbnail');
+
+            for (let i = 0; i < videoThumbnails.length; i++) {
+                const title = videoThumbnails[i].getElementsByClassName('video-title')[0].innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    videoThumbnails[i].style.display = ""; // Show the video thumbnail
                 } else {
-                    video.style.display = 'none';
+                    videoThumbnails[i].style.display = "none"; // Hide the video thumbnail
                 }
-            });
-    
-            const noResultsElement = document.getElementById('noResults');
-            if (resultsFound) {
-                noResultsElement.style.display = 'none';
-            } else {
-                noResultsElement.style.display = 'block';
             }
         }
+        let isMinimized = false; // Track the minimized state
+
+function minimizePlayer() {
+    const lightbox = document.getElementById('lightbox');
+    const title = document.querySelector('.lightbox-title'); // Get the title element
+    const minimizeButton = document.getElementById('minimizeButton'); // Get the minimize button
+
+    if (isMinimized) {
+        lightbox.classList.remove('minimized'); // Restore to original size
+        title.classList.remove('hidden'); // Show the title
+        lightbox.style.display = 'flex'; // Show the lightbox
+        minimizeButton.innerText = 'Minimize'; // Change button text to "Minimize"
+    } else {
+        lightbox.classList.add('minimized'); // Add minimized class
+        title.classList.add('hidden'); // Hide the title
+        lightbox.style.display = 'block'; // Keep it visible
+        minimizeButton.innerText = 'Unminimize'; // Change button text to "Unminimize"
+    }
+    isMinimized = !isMinimized; // Toggle the state
+}
+
+function openLightbox(videoId, title) {
+    // Check if the player is minimized
+    if (isMinimized) {
+        minimizePlayer(); // Restore to unminimized state
+    }
     
-        // Add event listener for Enter key in the search input
-        document.getElementById('searchInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchVideos();
-            }
-        });
-    
+    // Load the new video
+    document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
+}
     </script>
-    
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 

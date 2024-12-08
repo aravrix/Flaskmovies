@@ -1,352 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flaskmovies - Watch movies and shortfilms for free | 100% Legal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
     <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
+    <style>
+        .lightbox-title.hidden {
+    display: none; /* Hide the title */
+}
+    
+        .search-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            margin: 10px;
+            cursor: pointer;
+            width: 480px; /* Thumbnail width */
+            height: 305px; /* Thumbnail height */
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #000; /* Fallback color */
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image covers the area */
+        }
+
+        .video-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bolder;
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none; /* Initially hidden */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 100%;
+            max-width: 750px;
+            background: rgb(99, 126, 194);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .lightbox-title {
+            background: rgb(99, 126, 194);
+            color: white;
+            padding: 10px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .lightbox.minimized {
+    width: 300px; /* Width of the minimized player */
+    height: 200px; /* Height of the minimized player */
+    position: fixed;
+    bottom: 20px; /* Position from the bottom */
+    right: 20px; /* Position from the right */
+    z-index: 1001; /* Ensure it is above other content */
+}
+
+        iframe {
+    width: 100%; /* Full width of the container */
+    height: auto; /* Automatic height */
+    aspect-ratio: 16 / 9; /* Maintain a 16:9 aspect ratio */
+    max-width: 100%; /* Ensure it doesn't exceed the container */
+    margin: 0 auto; /* Center the iframe */
+}
+
+        .close, .minimize {
+            background-color: #000000; /* Stylish background */
+            border: none;
+            border-radius: 5px;
+            color: white;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .close:hover, .minimize:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+        }
+
+        /* Responsive styles */
+        @media (min-width: 768px) {
+            .video-container {
+                flex-direction: row;
+            }
+            .video-thumbnail {
+                width: calc(33.33% - 20px); /* Three thumbnails in a row */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .video-container {
+                flex-direction: column;
+            }
+            .video-thumbnail {
+                width: 100%; /* One thumbnail in a row */
+            }
+        }
+    </style>
 </head>
 <body>
+       <!-- Main Page Content -->
+  <div class="content" id="mainContent">
     <div class="Text">
-  <a href="https://flaskmovies.pages.dev/"
- style="text-decoration: none;"> <h1 class="logo">Flaskmovies</h1></a>
+     <a href="https://flaskmovies.pages.dev/" style="text-decoration: none;">
+            <h1 class="logo">Flaskmovies</h1>
+        </a>
         <b>Always free! 100% Legal</b>
+        <br><br>
+        <b style="color: rgb(108, 11, 11);">Age Rating: R</b>
     </div>
     <div style="text-align:center; width:100%; background-color: f9f9f; color: black; padding: 6px; font-family: 'Arial', sans-serif">
         <a href="/index.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-right: 5px;">Movies</a>
         <span style="color: black;">/</span>
         <a href="/documentaries.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-left: 5px;">Documentaries</a>
     </div>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search Movies...">
-        <button onclick="searchVideos()"><b>Go!</b></button>
     </div>
-    <br>
-
-
-    <!-- "Uh oh, no results found" message -->
-    <div class="no-results" id="noResults" style="display: none; text-align: center;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-emoji-frown" viewBox="0 0 16 16">
-            <path d="M8 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1zM8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0z"/>
-            <path d="M4 8c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm6 0c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm1 4a5.978 5.978 0 0 0-6 0 .5.5 0 1 0 .615.789A4.978 4.978 0 0 1 8 12c1.222 0 2.392.441 3.385 1.211a.5.5 0 1 0 .615-.789 5.978 5.978 0 0 0-3-1z"/>
-        </svg>
-        <p>Uh oh, No results found!</p>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for movies..." onkeyup="filterVideos()">
+    </div>
+  <div class="video-container" id="videoContainer">
+    <div class="video-thumbnail" onclick="openLightbox('WpkLtCOuM00', 'Full Version | The spy in the contract marriage | [A Love Journal]')">
+        <img src="https://img.youtube.com/vi/WpkLtCOuM00/hqdefault.jpg" alt="Full Version | The spy in the contract marriage">
+        <div class="video-title">Full Version | The spy in the contract marriage</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('sZ2zD0lo2ps', 'The Girl He Never Noticed | Romantic movie')">
+        <img src="https://img.youtube.com/vi/sZ2zD0lo2ps/hqdefault.jpg" alt="The Girl He Never Noticed">
+        <div class="video-title">The Girl He Never Noticed</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('7STTBgddaFc', 'SILVER REVOLVER - Hollywood English Action Movie | New Action Thriller Movies | Jason Statham')">
+        <img src="https://img.youtube.com/vi/7STTBgddaFc/hqdefault.jpg" alt="SILVER REVOLVER - Hollywood English Action Movie">
+        <div class="video-title">SILVER REVOLVER</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('xQ-EuIC3eGQ', 'My Secret Billionaire | ROMANCE | Free Movie | Drama Film')">
+        <img src="https://img.youtube.com/vi/xQ-EuIC3eGQ/hqdefault.jpg" alt="My Secret Billionaire">
+        <div class="video-title">My Secret Billionaire</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('FqfbvfzrHxc', 'Go Back to China with Anna Akana - FULL MOVIE - Comedy, Drama, Asian American')">
+        <img src="https://img.youtube.com/vi/FqfbvfzrHxc/hqdefault.jpg" alt="Go Back to China">
+        <div class="video-title">Go Back to China</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('POP_Xf6HvMA', 'First Daughter | Full Movie | Rapid Response')">
+        <img src="https://img.youtube.com/vi/POP_Xf6HvMA/hqdefault.jpg" alt="First Daughter">
+        <div class="video-title">First Daughter</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('o_f6iWSOsYQ', 'A Rose and a Tulip Full Movie (English Subbed)')">
+        <img src="https://img.youtube.com/vi/o_f6iWSOsYQ/hqdefault.jpg" alt="A Rose and a Tulip">
+        <div class="video-title">A Rose and a Tulip</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ZjCJBU_Dbyo', 'My Mom Robs Banks - Full Movie')">
+        <img src="https://img.youtube.com/vi/ZjCJBU_Dbyo/hqdefault.jpg" alt="My Mom Robs Banks">
+        <div class="video-title">My Mom Robs Banks</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('6jvqXxt3WNo', 'Not Cinderella\'s Type (2018) | Full Movie | Paris Warner | Tim Flynn | Tanner Gillman')">
+        <img src="https://img.youtube.com/vi/6jvqXxt3WNo/hqdefault.jpg" alt="Not Cinderella's Type">
+        <div class="video-title">Not Cinderella's Type</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ATi3GdospAo', 'Child Remains (2019) | Full Horror Movie | Suzanne Clement | Allan Hawco | Shelley Thompson')">
+        <img src="https://img.youtube.com/vi/ATi3GdospAo/hqdefault.jpg" alt="Child Remains">
+        <div class="video-title">Child Remains</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ubW9OMrXjKg', 'OUIJA HOUSE - FULL HD HORROR MOVIE IN ENGLISH')">
+        <img src="https://img.youtube.com/vi/ubW9OMrXjKg/hqdefault.jpg" alt="OUIJA HOUSE - FULL HD HORROR MOVIE IN ENGLISH">
+        <div class="video-title">OUIJA HOUSE</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('VEVm0OcA1mI', 'Stalked By My Neighbor - Full Movie')">
+        <img src="https://img.youtube.com/vi/VEVm0OcA1mI/hqdefault.jpg" alt="Stalked By My Neighbor - Full Movie">
+        <div class="video-title">Stalked By My Neighbor</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('CGFrjDAx638', 'The Mime | Short Horror Film')">
+        <img src="https://img.youtube.com/vi/CGFrjDAx638/hqdefault.jpg" alt="The Mime | Short Horror Film">
+        <div class="video-title">The Mime</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('d8Vz8FTH_pQ', '【English Dubbed】Eye for an Eye: The Blind Swordsman | A hit martial arts film! | Action Martial Arts')">
+        <img src="https://img.youtube.com/vi/d8Vz8FTH_pQ/hqdefault.jpg" alt="【English Dubbed】Eye for an Eye: The Blind Swordsman | A hit martial arts film! | Action Martial Arts">
+        <div class="video-title">Eye for an Eye</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('I_QqpJTKJHE', '【FULL MOVIE】Flame Bride | Dominant Marshal fell for the Stubborn Bride | 烈焰新娘')">
+        <img src="https://img.youtube.com/vi/I_QqpJTKJHE/hqdefault.jpg" alt="【FULL MOVIE】Flame Bride | Dominant Marshal fell for the Stubborn Bride | 烈焰新娘">
+        <div class="video-title">Flame Bride</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('atnW4D6pc-w', 'Conjuring the Beyond | Full Exorcism Horror Movie | Horror Central')">
+        <img src="https://img.youtube.com/vi/atnW4D6pc-w/hqdefault.jpg" alt="Conjuring the Beyond | Full Exorcism Horror Movie | Horror Central">
+        <div class="video-title">Conjuring the Beyond</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('BSYAPKgcgj0', 'THE IMOM | Omeleto')">
+        <img src="https://img.youtube.com/vi/BSYAPKgcgj0/hqdefault.jpg" alt="THE IMOM | Omeleto">
+        <div class="video-title">THE IMOM</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('Z2fOOIXHg8E', 'The ALTER Files: Dental Disasters')">
+        <img src="https://img.youtube.com/vi/Z2fOOIXHg8E/hqdefault.jpg" alt="The ALTER Files: Dental Disasters">
+        <div class="video-title">Dental Disasters</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ttIWmYaknCg', '[MULTI SUB]Full Movie《Immortal Fate》|action|Original version without cuts|#SixStarCinema🎬')">
+        <img src="https://img.youtube.com/vi/ttIWmYaknCg/hqdefault.jpg" alt="[MULTI SUB]Full Movie《Immortal Fate》|action|Original version without cuts|#SixStarCinema🎬">
+        <div class="video-title">Immortal Fate</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('t05rpOyQK4k', '【ENG SUB】Under the Three Rivers | Adventure/Action | Chinese Online Movie Channel')">
+        <img src="https://img.youtube.com/vi/t05rpOyQK4k/hqdefault.jpg" alt="【ENG SUB】Under the Three Rivers | Adventure/Action | Chinese Online Movie Channel">
+        <div class="video-title">Under the Three Rivers</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('Nm5acz1LSOc', '【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake')">
+        <img src="https://img.youtube.com/vi/Nm5acz1LSOc/hqdefault.jpg" alt="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake">
+        <div class="video-title">The Beauty Snake</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('OrOYvVf6tIM', 'Horror Short Film \'Other Side of the Box\' | ALTER')">
+        <img src="https://img.youtube.com/vi/OrOYvVf6tIM/hqdefault.jpg" alt="Horror Short Film 'Other Side of the Box' | ALTER">
+        <div class="video-title">Other Side of the Box</div>
     </div>
     
-    <!-- Video container -->
-    <div class="video-container">
-        <lite-youtube videoid="WpkLtCOuM00" title="Full Version | The spy in the contract marriage | [A Love Journal]"></lite-youtube>
-        <lite-youtube videoid="sZ2zD0lo2ps" title="The Girl He Never Noticed | Romantic movie"></lite-youtube>
-        <lite-youtube videoid="7STTBgddaFc" title="SILVER REVOLVER - Hollywood English Action Movie | New Action Thriller Movies | Jason Statham"></lite-youtube>
-        <lite-youtube videoid="xQ-EuIC3eGQ" title="My Secret Billionaire | ROMANCE | Free Movie | Drama Film"></lite-youtube>
-        <lite-youtube videoid="FqfbvfzrHxc" title="Go Back to China with Anna Akana - FULL MOVIE - Comedy, Drama, Asian American"></lite-youtube>
-        <lite-youtube videoid="POP_Xf6HvMA" title="First Daughter | Full Movie | Rapid Response"></lite-youtube>
-        <lite-youtube videoid="o_f6iWSOsYQ" title="A Rose and a Tulip Full Movie (English Subbed)"></lite-youtube>
-        <lite-youtube videoid="ZjCJBU_Dbyo" title="My Mom Robs Banks - Full Movie"></lite-youtube>
-        <lite-youtube videoid="6jvqXxt3WNo" title="Not Cinderella's Type (2018) | Full Movie | Paris Warner | Tim Flynn | Tanner Gillman"></lite-youtube>
-        <lite-youtube videoid="ATi3GdospAo" title="Child Remains (2019) | Full Horror Movie | Suzanne Clement | Allan Hawco | Shelley Thompson"></lite-youtube>
-        <lite-youtube videoid="07iXXR5536k" title="【ENG SUB】My Happy Marriage 2023 【Japanese Full Movie】 || As Long As We Both Shall"></lite-youtube>
-        <lite-youtube videoid="qBczncM0ntk" title="Beauty And The Billionaire (2022) | Full Movie | Sashleigha Hightower | Chris Reid"></lite-youtube>
-        <lite-youtube videoid="Ma6HhbxnI2M" title="Horror Short Film 'Kalley's Last Review' | ALTER"></lite-youtube>
-        <lite-youtube videoid="iYefshjHv04" title="[18+] GAY SHORT FILM - Signs of Love"></lite-youtube>
-        <lite-youtube videoid="flP2oQsy5IY" title="Home Abduction - Full Movie"></lite-youtube>
-        <lite-youtube videoid="takrce_4Fhw" title="Hollow | Horror Film"></lite-youtube>
-        <lite-youtube videoid="_pxyd9-ZRn8" title="My Guardian Angel | Full Movie | Eerie Thriller Drama"></lite-youtube>
-        <lite-youtube videoid="CQX6e1L0KRw" title="‘Maria Leonora Teresa’ FULL MOVIE | Zanjoe Marudo, Jodi Sta. Maria, Iza Calzado"></lite-youtube>
-        <lite-youtube videoid="yI50AwTDpiU" title="PENDATANG (2023) full movie"></lite-youtube>
-        <lite-youtube videoid="ytPPunDiLBc" title="The Donor - Full Movie"></lite-youtube>
-        <lite-youtube videoid="lNYTPjZxg5k" title="'Hello Stranger: The Movie' FULL MOVIE | Tony Labrusca, JC Alcantara"></lite-youtube>
-        <lite-youtube videoid="UvqQSZduj-I" title="Flight666 - Hell at 10,000 meters above sea level - Free movies"></lite-youtube>
-        <lite-youtube videoid="ubW9OMrXjKg" title="OUIJA HOUSE - FULL HD HORROR MOVIE IN ENGLISH"></lite-youtube>
-        <lite-youtube videoid="VEVm0OcA1mI" title="Stalked By My Neighbor - Full Movie"></lite-youtube>
-        <lite-youtube videoid="CGFrjDAx638" title="The Mime | Short Horror Film"></lite-youtube>
-        <lite-youtube videoid="d8Vz8FTH_pQ" title="【English Dubbed】Eye for an Eye: The Blind Swordsman | A hit martial arts film! | Action Martial Arts"></lite-youtube>
-        <lite-youtube videoid="I_QqpJTKJHE" title="【FULL MOVIE】Flame Bride | Dominant Marshal fell for the Stubborn Bride | 烈焰新娘"></lite-youtube>
-        <lite-youtube videoid="atnW4D6pc-w" title="Conjuring the Beyond | Full Exorcism Horror Movie | Horror Central"></lite-youtube>
-        <lite-youtube videoid="BSYAPKgcgj0" title="THE IMOM | Omeleto"></lite-youtube>
-        <lite-youtube videoid="Z2fOOIXHg8E" title="The ALTER Files: Dental Disasters"></lite-youtube>
-        <lite-youtube videoid="ttIWmYaknCg" title="[MULTI SUB]Full Movie《Immortal Fate》|action|Original version without cuts|#SixStarCinema🎬"></lite-youtube>
-        <lite-youtube videoid="t05rpOyQK4k" title="【ENG SUB】Under the Three Rivers | Adventure/Action | Chinese Online Movie Channel"></lite-youtube>
-        <lite-youtube videoid="Nm5acz1LSOc" title="【FULL Movie】The alluring snake fears no demon-slaying tune！ | The Beauty Snake"></lite-youtube>
-        <lite-youtube videoid="OrOYvVf6tIM" title="Horror Short Film 'Other Side of the Box' | ALTER"></lite-youtube>
+    <div class="video-thumbnail" onclick="openLightbox('qBczncM0ntk', 'Beauty And The Billionaire (2022) | Full Movie | Sashleigha Hightower | Chris Reid')">
+        <img src="https://img.youtube.com/vi/qBczncM0ntk/hqdefault.jpg" alt="Beauty And The Billionaire">
+        <div class="video-title">Beauty And The Billionaire</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('Ma6HhbxnI2M', 'Horror Short Film \'Kalley\'s Last Review\' | ALTER')">
+        <img src="https://img.youtube.com/vi/Ma6HhbxnI2M/hqdefault.jpg" alt="Kalley's Last Review">
+        <div class="video-title">Kalley's Last Review</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('iYefshjHv04', '[18+] GAY SHORT FILM - Signs of Love')">
+        <img src="https://img.youtube.com/vi/iYefshjHv04/hqdefault.jpg" alt="Signs of Love">
+        <div class="video-title">Signs of Love</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('flP2oQsy5IY', 'Home Abduction - Full Movie')">
+        <img src="https://img.youtube.com/vi/flP2oQsy5IY/hqdefault.jpg" alt="Home Abduction">
+        <div class="video-title">Home Abduction</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('takrce_4Fhw', 'Hollow | Horror Film')">
+        <img src="https://img.youtube.com/vi/takrce_4Fhw/hqdefault.jpg" alt="Hollow">
+        <div class="video-title">Hollow</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('_pxyd9-ZRn8', 'My Guardian Angel | Full Movie | Eerie Thriller Drama')">
+        <img src="https://img.youtube.com/vi/_pxyd9-ZRn8/hqdefault.jpg" alt="My Guardian Angel">
+        <div class="video-title">My Guardian Angel</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('CQX6e1L0KRw', '‘Maria Leonora Teresa’ FULL MOVIE | Zanjoe Marudo, Jodi Sta. Maria, Iza Calzado')">
+        <img src="https://img.youtube.com/vi/CQX6e1L0KRw/hqdefault.jpg" alt="Maria Leonora Teresa">
+        <div class="video-title">Maria Leonora Teresa</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('yI50AwTDpiU', 'PENDATANG (2023) full movie')">
+        <img src="https://img.youtube.com/vi/yI50AwTDpiU/hqdefault.jpg" alt="PENDATANG">
+        <div class="video-title">PENDATANG</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('ytPPunDiLBc', 'The Donor - Full Movie')">
+        <img src="https://img.youtube.com/vi/ytPPunDiLBc/hqdefault.jpg" alt="The Donor">
+        <div class="video-title">The Donor</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('lNYTPjZxg5k', 'Hello Stranger: The Movie | Tony Labrusca, JC Alcantara')">
+        <img src="https://img.youtube.com/vi/lNYTPjZxg5k/hqdefault.jpg" alt="Hello Stranger: The Movie">
+        <div class="video-title">Hello Stranger: The Movie</div>
+    </div>
+    <div class="video-thumbnail" onclick="openLightbox('UvqQSZduj-I', 'Flight666 - Hell at 10,000 meters above sea level - Free movies')">
+        <img src="https://img.youtube.com/vi/UvqQSZduj-I/hqdefault.jpg" alt="Flight666">
+        <div class="video-title">Flight666</div>
+    </div>
+    
+</div>
+    </div>
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-title">Now Playing</div>
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="divider"></div>
+            <button class="minimize" id="minimizeButton" onclick="minimizePlayer()">Minimize</button>
+                        <button class="close" onclick="closeLightbox()">Close</button>
+        </div>
     </div>
     <script>
-        class LiteYTEmbed extends HTMLElement {
-            static currentVideo = null;
-    
-            connectedCallback() {
-                this.videoId = this.getAttribute('videoid');
-                this.title = this.getAttribute('title') || "";
-                this.playLabel = this.getAttribute('playlabel') || 'Play';
-                this.dataset.title = this.title;
-    
-                // Setup the background image
-                if (!this.style.backgroundImage) {
-                    this.style.backgroundImage = `url("https://i.ytimg.com/vi/${this.videoId}/hqdefault.jpg")`;
-                    this.upgradePosterImage();
-                }
-    
-                let playBtnEl = this.querySelector('.lty-playbtn');
-                if (!playBtnEl) {
-                    playBtnEl = document.createElement('button');
-                    playBtnEl.type = 'button';
-                    playBtnEl.classList.add('lty-playbtn');
-                    this.append(playBtnEl);
-                }
-    
-                if (!playBtnEl.textContent) {
-                    const playBtnLabelEl = document.createElement('span');
-                    playBtnLabelEl.className = 'lyt-visually-hidden';
-                    playBtnLabelEl.textContent = this.playLabel;
-                    playBtnEl.append(playBtnLabelEl);
-                }
-    
-                this.addNoscriptIframe();
-                playBtnEl.addEventListener('click', this.activate.bind(this));
-            }
-    
-            addNoscriptIframe() {
-                const iframeEl = this.createBasicIframe();
-                const noscriptEl = document.createElement('noscript');
-                noscriptEl.innerHTML = iframeEl.outerHTML;
-                this.append(noscriptEl);
-            }
-    
-            createBasicIframe(startTime = 0) {
-                const iframeEl = document.createElement('iframe');
-                iframeEl.width = 560;
-                iframeEl.height = 315;
-                iframeEl.title = this.playLabel;
-                iframeEl.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
-                iframeEl.allowFullscreen = true;
-                iframeEl.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(this.videoId)}?autoplay=1&playsinline=1&start=${startTime}`;
-    
-                iframeEl.onload = () => this.monitorVideo(iframeEl);
-    
-                return iframeEl;
-            }
-    
-            monitorVideo(iframe) {
-                const videoId = this.videoId;
-                const iframeWindow = iframe.contentWindow;
-    
-                const interval = setInterval(() => {
-                    if (LiteYTEmbed.currentVideo !== this) {
-                        clearInterval(interval);
-                        return;
-                    }
-    
-                    iframeWindow.postMessage('{"event":"listening"}', '*');
-    
-                    window.addEventListener('message', (event) => {
-                        if (event.data && typeof event.data === 'string') {
-                            try {
-                                const data = JSON.parse(event.data);
-                                if (data.info && data.info.currentTime) {
-                                    const currentTime = data.info.currentTime;
-                                    localStorage.setItem(`yt_${videoId}_progress`, currentTime);
-    
-                                    if (currentTime >= data.info.duration) {
-                                        this.resetVideo();
-                                        clearInterval(interval);
-                                    }
-                                }
-                            } catch (error) {}
-                        }
-                    });
-                }, 1000);
-            }
-    
-            resetVideo() {
-                const iframe = this.querySelector('iframe');
-                if (iframe) {
-                    iframe.src = '';
-                    iframe.remove();
-                }
-    
-                localStorage.removeItem(`yt_${this.videoId}_progress`);
-                this.classList.remove('lyt-activated');
-            }
-    
-            async activate() {
-                if (this.classList.contains('lyt-activated')) return;
-                this.classList.add('lyt-activated');
-    
-                if (LiteYTEmbed.currentVideo && LiteYTEmbed.currentVideo !== this) {
-                    LiteYTEmbed.currentVideo.stopVideo();
-                }
-    
-                const savedProgress = localStorage.getItem(`yt_${this.videoId}_progress`);
-                const startTime = savedProgress ? Math.floor(savedProgress) : 0;
-    
-                const iframeEl = this.createBasicIframe(startTime);
-                this.append(iframeEl);
-    
-                iframeEl.focus();
-                LiteYTEmbed.currentVideo = this;
-            }
-    
-            stopVideo() {
-                const iframe = this.querySelector('iframe');
-                if (iframe) {
-                    iframe.src = '';
-                    iframe.remove();
-                    this.classList.remove('lyt-activated');
-                }
-            }
-    
-            upgradePosterImage() {
-                setTimeout(() => {
-                    const webpUrl = `https://i.ytimg.com/vi_webp/${this.videoId}/sddefault.webp`;
-                    const img = new Image();
-                    img.fetchPriority = 'low';
-                    img.src = webpUrl;
-                    img.onload = () => {
-                        if (img.width >= 320) {
-                            this.style.backgroundImage = `url("${img.src}")`;
-                        }
-                    };
-                }, 300);
-            }
+        function openLightbox(videoId, title) {
+            document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
         }
-    
-        customElements.define('lite-youtube', LiteYTEmbed);
-    
-        function searchVideos() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const videos = document.querySelectorAll('.video-container lite-youtube');
-            let resultsFound = false;
-    
-            videos.forEach(video => {
-                const title = video.title.toLowerCase();
-                if (title.includes(searchInput) || searchInput === '') {
-                    video.style.display = 'block';
-                    resultsFound = true;
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.getElementById('videoFrame').src = ''; // Stop the video
+        }
+
+        function minimizePlayer() {
+            // Logic to minimize the player
+            alert('Minimize functionality to be implemented.');
+        }
+
+        function filterVideos() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toLowerCase();
+            const videoContainer = document.getElementById('videoContainer');
+            const videoThumbnails = videoContainer.getElementsByClassName('video-thumbnail');
+
+            for (let i = 0; i < videoThumbnails.length; i++) {
+                const title = videoThumbnails[i].getElementsByClassName('video-title')[0].innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    videoThumbnails[i].style.display = ""; // Show the video thumbnail
                 } else {
-                    video.style.display = 'none';
+                    videoThumbnails[i].style.display = "none"; // Hide the video thumbnail
                 }
-            });
-    
-            const noResultsElement = document.getElementById('noResults');
-            if (resultsFound) {
-                noResultsElement.style.display = 'none';
-            } else {
-                noResultsElement.style.display = 'block';
             }
         }
+        let isMinimized = false; // Track the minimized state
+
+function minimizePlayer() {
+    const lightbox = document.getElementById('lightbox');
+    const title = document.querySelector('.lightbox-title'); // Get the title element
+    const minimizeButton = document.getElementById('minimizeButton'); // Get the minimize button
+
+    if (isMinimized) {
+        lightbox.classList.remove('minimized'); // Restore to original size
+        title.classList.remove('hidden'); // Show the title
+        lightbox.style.display = 'flex'; // Show the lightbox
+        minimizeButton.innerText = 'Minimize'; // Change button text to "Minimize"
+    } else {
+        lightbox.classList.add('minimized'); // Add minimized class
+        title.classList.add('hidden'); // Hide the title
+        lightbox.style.display = 'block'; // Keep it visible
+        minimizeButton.innerText = 'Unminimize'; // Change button text to "Unminimize"
+    }
+    isMinimized = !isMinimized; // Toggle the state
+}
+
+function openLightbox(videoId, title) {
+    // Check if the player is minimized
+    if (isMinimized) {
+        minimizePlayer(); // Restore to unminimized state
+    }
     
-        // Add event listener for Enter key in the search input
-        document.getElementById('searchInput').addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                searchVideos();
-            }
-        });
-    
+    // Load the new video
+    document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
+    document.getElementById('lightbox').style.display = 'flex';
+    document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
+}
     </script>
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
