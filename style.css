@@ -306,21 +306,17 @@ iframe {
     }
 }
   
-  /* Container for buttons */
+ /* Container for the buttons */
 .button-container {
-    position: absolute; /* Position relative to the viewport */
-    top: 50%; /* Move to the middle of the screen */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the container's dimensions */
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Spacing between buttons */
-    width: 300px; /* Fixed width for buttons */
-    max-height: 80vh; /* Restrict the height to 80% of the viewport */
-    overflow-y: auto; /* Allow scrolling if there are more buttons */
-    padding: 10px;
-    text-align: center;
-    scrollbar-width: none; /* Hide the scrollbar on Firefox */
+    align-items: center; /* Center the buttons horizontally */
+    gap: 20px; /* Space between buttons */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 800px; /* Optional: Restrict the max width */
+    margin: 0 auto; /* Center the container on the page */
 }
 
 /* Big button styling */
@@ -329,17 +325,34 @@ iframe {
     padding: 20px 40px;
     font-size: 1.5rem; /* Big text */
     font-weight: bold;
-    color: #191970;
+    color:  #191970;
     text-decoration: none;
-    background: #FFD700;
+    background: #FFD700; /* Gold color background */
     border-radius: 8px; /* Rounded corners */
+    border: 4px solid #000000; /* Black border */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
     transition: all 0.2s ease-in-out; /* Smooth hover effects */
+    width: 80%; /* Make buttons responsive */
+    max-width: 350px; /* Max width to prevent oversized buttons */
+    text-align: center;
 }
 
 /* Hover effect */
 .big-button:hover {
-    transform: scale(1.1); /* Slight zoom */
+    transform: scale(1.05); /* Slight zoom */
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3); /* Stronger shadow */
-    background: #5d5003;
+    background: #FF8C00; /* Darker orange shade for the hover */
+    border: 4px solid #FFD700; /* Keep the gold border on hover */
+}
+
+/* Optional: Active state (clicked state) */
+.big-button:active {
+    background: #FF4500; /* Darker red-orange when clicked */
+    box-shadow: none; /* Remove shadow on active */
+}
+
+/* Style for the Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
 }
