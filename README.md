@@ -2,5 +2,5 @@
 A library of free movies/shortfilms from YouTube.
 
 # Desktop Site View
-![image](https://github.com/user-attachments/assets/6507a108-4aab-4f35-adce-7965b704e148)
+![image](![flaskmovies-pages-dev-1024x768desktop-7dbd6a](https://github.com/user-attachments/assets/c60486ae-e55a-453f-9a79-74634591ed39)
 
