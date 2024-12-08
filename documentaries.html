@@ -8,141 +8,6 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
     <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
-    <style>
-        .lightbox-title.hidden {
-    display: none; /* Hide the title */
-}
-    
-        .search-container {
-            text-align: center;
-            margin: 20px;
-        }
-
-        .video-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px;
-        }
-
-        .video-thumbnail {
-            position: relative;
-            margin: 10px;
-            cursor: pointer;
-            width: 480px; /* Thumbnail width */
-            height: 305px; /* Thumbnail height */
-            overflow: hidden;
-            border-radius: 8px;
-            background-color: #000; /* Fallback color */
-        }
-
-        .video-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensures the image covers the area */
-        }
-
-        .video-title {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px;
-            text-align: center;
-            font-size: 14px;
-            font-weight: bolder;
-        }
-
-        .lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: none; /* Initially hidden */
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .lightbox-content {
-            position: relative;
-            width: 100%;
-            max-width: 750px;
-            background: rgb(99, 126, 194);
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .lightbox-title {
-            background: rgb(99, 126, 194);
-            color: white;
-            padding: 10px;
-            font-size: 20px;
-            text-align: center;
-        }
-
-        .lightbox.minimized {
-    width: 300px; /* Width of the minimized player */
-    height: 200px; /* Height of the minimized player */
-    position: fixed;
-    bottom: 20px; /* Position from the bottom */
-    right: 20px; /* Position from the right */
-    z-index: 1001; /* Ensure it is above other content */
-}
-
-        iframe {
-    width: 100%; /* Full width of the container */
-    height: auto; /* Automatic height */
-    aspect-ratio: 16 / 9; /* Maintain a 16:9 aspect ratio */
-    max-width: 100%; /* Ensure it doesn't exceed the container */
-    margin: 0 auto; /* Center the iframe */
-}
-
-        .close, .minimize {
-            background-color: #000000; /* Stylish background */
-            border: none;
-            border-radius: 5px;
-            color: white;
-            padding: 10px 15px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .close:hover, .minimize:hover {
-            background-color: #0056b3; /* Darker shade on hover */
-        }
-
-        .no-results {
-            display: none;
-            text-align: center;
-        }
-
-        /* Responsive styles */
-        @media (min-width: 768px) {
-            .video-container {
-                flex-direction: row;
-            }
-            .video-thumbnail {
-                width: calc(33.33% - 20px); /* Three thumbnails in a row */
-            }
-        }
-
-        @media (max-width: 767px) {
-            .video-container {
-                flex-direction: column;
-            }
-            .video-thumbnail {
-                width: 100%; /* One thumbnail in a row */
-            }
-        }
-    </style>
 </head>
 <body>
        <!-- Main Page Content -->
@@ -151,14 +16,16 @@
      <a href="https://flaskmovies.pages.dev/" style="text-decoration: none;">
             <h1 class="logo">Flaskmovies Documentaries</h1>
         </a>
-        <b>Always free! 100% Legal</b>
+        <b style="color: #D3D3D3;">Always free! 100% Legal</b>
         <br><br>
-        <b style="color: rgb(108, 11, 11);">Age Rating: PG-13</b>
+        <b style="color: #FFFFFF; background-color: #8c6702; border: #000000; border: 4px solid #000000;" >Age Rating: PG-13</b>
     </div>
     <div style="text-align:center; width:100%; background-color: f9f9f; color: black; padding: 6px; font-family: 'Arial', sans-serif">
-        <a href="/index.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-right: 5px;">Movies</a>
-        <span style="color: black;">/</span>
-        <a href="/documentaries.html" style="color: rgb(56, 53, 59); text-decoration: none; font-size: 17px; margin-left: 5px;">Documentaries</a>
+        <a href="/index.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-right: 5px;">Movies</a>
+        <span style="color: rgb(255, 255, 255);">/</span>
+        <a href="/documentaries.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-left: 5px;">Documentaries</a>
+        <span style="color: rgb(240, 240, 240);">/</span>
+        <a href="/kids.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-left: 5px;">Kids</a>
     </div>
     </div>
     <div class="search-container">
@@ -166,64 +33,66 @@
     </div>
     <div class="video-container" id="videoContainer">
         <div class="video-thumbnail" onclick="openLightbox('YGSN2MTmzDQ', 'The Junko Furuta Case ...In Complete Detail')">
-            <img src="https://img.youtube.com/vi/YGSN2MTmzDQ/hqdefault.jpg" alt="The Junko Furuta Case ...In Complete Detail">
+            <img loading="lazy" src="https://img.youtube.com/vi/YGSN2MTmzDQ/hqdefault.jpg" alt="The Junko Furuta Case ...In Complete Detail">
             <div class="video-title">The Junko Furuta Case</div>
         </div>
         <div class="video-thumbnail" onclick="openLightbox('-BpKixUKbU8', 'The Unspeakable Things That Happened In Unit 731')">
-            <img src="https://img.youtube.com/vi/-BpKixUKbU8/hqdefault.jpg" alt="The Unspeakable Things That Happened In Unit 731">
+            <img loading="lazy" src="https://img.youtube.com/vi/-BpKixUKbU8/hqdefault.jpg" alt="The Unspeakable Things That Happened In Unit 731">
             <div class="video-title">Unit 731: Unspeakable Things</div>
         </div>
         <div class="video-thumbnail" onclick="openLightbox('4WrMfY2Mj2Y', 'This is Why Lobotomy is the Worst Surgery in History')">
-            <img src="https://img.youtube.com/vi/4WrMfY2Mj2Y/hqdefault.jpg" alt="This is Why Lobotomy is the Worst Surgery in History">
+            <img loading="lazy" src="https://img.youtube.com/vi/4WrMfY2Mj2Y/hqdefault.jpg" alt="This is Why Lobotomy is the Worst Surgery in History">
             <div class="video-title">Why Lobotomy is the Worst Surgery</div>
         </div>
         <div class="video-thumbnail" onclick="openLightbox('ZSXypSLfVN8', 'The Worst Punishments in Human History')">
-            <img src="https://img.youtube.com/vi/ZSXypSLfVN8/hqdefault.jpg" alt="The Worst Punishments in Human History">
+            <img loading="lazy" src="https://img.youtube.com/vi/ZSXypSLfVN8/hqdefault.jpg" alt="The Worst Punishments in Human History">
             <div class="video-title">The Worst Punishments in Human History</div>        
         </div>        
-    <div class="video-thumbnail" onclick="openLightbox('uSuMOh_d9oc', 'Indian village midwives make a shocking confession - BBC World Service Documentaries')">
-        <img src="https://img.youtube.com/vi/uSuMOh_d9oc/hqdefault.jpg" alt="Indian village midwives make a shocking confession - BBC World Service Documentaries">
-        <div class="video-title">Indian village midwives make a shocking confession</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('DKAusMNTNnk', 'Bride Kidnapping in Kyrgyzstan')">
-        <img src="https://img.youtube.com/vi/DKAusMNTNnk/hqdefault.jpg" alt="Bride Kidnapping in Kyrgyzstan">
-        <div class="video-title">Bride Kidnapping in Kyrgyzstan</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('STe13RT238E', 'I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible')">
-        <img src="https://img.youtube.com/vi/STe13RT238E/hqdefault.jpg" alt="I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible">
-        <div class="video-title">I Was Sexually Assaulted By Over 70 Men</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('XY7QOlqirns', 'A Crime Unpunished: Bangladeshi Gang Rape')">
-        <img src="https://img.youtube.com/vi/XY7QOlqirns/hqdefault.jpg" alt="A Crime Unpunished: Bangladeshi Gang Rape">
-        <div class="video-title">A Crime Unpunished: Bangladeshi Gang Rape</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('jj8SxLdk55E', 'The lives of sex workers and their children on G.B Road, New Delhi\'s biggest red-light district')">
-        <img src="https://img.youtube.com/vi/jj8SxLdk55E/hqdefault.jpg" alt="The lives of sex workers and their children on G.B Road, New Delhi's biggest red-light district">
-        <div class="video-title">The lives of sex workers and their children</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('ew7-Z2xCMgE', 'India\'s prostitution villages | DW Documentary')">
-        <img src="https://img.youtube.com/vi/ew7-Z2xCMgE/hqdefault.jpg" alt="India's prostitution villages | DW Documentary">
-        <div class="video-title">India's prostitution villages</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('22D7RFXfnfs', 'Pakistan\'s Open Secret I Transgender Documentary I Only Human')">
-        <img src="https://img.youtube.com/vi/22D7RFXfnfs/hqdefault.jpg" alt="Pakistan's Open Secret I Transgender Documentary I Only Human">
-        <div class="video-title">Pakistan's Open Secret</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('gqJo6kC5q_M', 'The marriage market for Indian HIV patients | DW Documentary')">
-        <img src="https://img.youtube.com/vi/gqJo6kC5q_M/hqdefault.jpg" alt="The marriage market for Indian HIV patients | DW Documentary">
-        <div class="video-title">The marriage market for Indian HIV patients</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('EB-HY5T5TEI', 'Sex addiction: Five times a day wasn\'t enough - BBC News')">
-        <img src="https://img.youtube.com/vi/EB-HY5T5TEI/hqdefault.jpg" alt="Sex addiction: Five times a day wasn't enough - BBC News">
-        <div class="video-title">Sex addiction: Five times a day wasn't enough</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('zZrL8q2IDWg', 'Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates')">
-        <img src="https://img.youtube.com/vi/zZrL8q2IDWg/hqdefault.jpg" alt="Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates">
-        <div class="video-title">Face to Face With Former ISIS Sex Slaves</div>
-    </div>
-    <div class="video-thumbnail" onclick="openLightbox('o9X9jBxWyO8', 'Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655')">
-        <img src="https://img.youtube.com/vi/o9X9jBxWyO8/hqdefault.jpg" alt="Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655">
-        <div class="video-title">Anything but a Mother: The Dark Side of Mother Teresa</div>
+        <div class="video-thumbnail" onclick="openLightbox('uSuMOh_d9oc', 'Indian village midwives make a shocking confession - BBC World Service Documentaries')">
+            <img loading="lazy" src="https://img.youtube.com/vi/uSuMOh_d9oc/hqdefault.jpg" alt="Indian village midwives make a shocking confession - BBC World Service Documentaries">
+            <div class="video-title">Indian village midwives make a shocking confession</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('DKAusMNTNnk', 'Bride Kidnapping in Kyrgyzstan')">
+            <img loading="lazy" src="https://img.youtube.com/vi/DKAusMNTNnk/hqdefault.jpg" alt="Bride Kidnapping in Kyrgyzstan">
+            <div class="video-title">Bride Kidnapping in Kyrgyzstan</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('STe13RT238E', 'I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible')">
+            <img loading="lazy" src="https://img.youtube.com/vi/STe13RT238E/hqdefault.jpg" alt="I Was Sexually Assaulted By Over 70 Men | Minutes With @LADbible">
+            <div class="video-title">I Was Sexually Assaulted By Over 70 Men</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('XY7QOlqirns', 'A Crime Unpunished: Bangladeshi Gang Rape')">
+            <img loading="lazy" src="https://img.youtube.com/vi/XY7QOlqirns/hqdefault.jpg" alt="A Crime Unpunished: Bangladeshi Gang Rape">
+            <div class="video-title">A Crime Unpunished: Bangladeshi Gang Rape</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('jj8SxLdk55E', 'The lives of sex workers and their children on G.B Road, New Delhi\'s biggest red-light district')">
+            <img loading="lazy" src="https://img.youtube.com/vi/jj8SxLdk55E/hqdefault.jpg" alt="The lives of sex workers and their children on G.B Road, New Delhi's biggest red-light district">
+            <div class="video-title">The lives of sex workers and their children</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('ew7-Z2xCMgE', 'India\'s prostitution villages | DW Documentary')">
+            <img loading="lazy" src="https://img.youtube.com/vi/ew7-Z2xCMgE/hqdefault.jpg" alt="India's prostitution villages | DW Documentary">
+            <div class="video-title">India's prostitution villages</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('22D7RFXfnfs', 'Pakistan\'s Open Secret I Transgender Documentary I Only Human')">
+            <img loading="lazy" src="https://img.youtube.com/vi/22D7RFXfnfs/hqdefault.jpg" alt="Pakistan's Open Secret I Transgender Documentary I Only Human">
+            <div class="video-title">Pakistan's Open Secret</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('gqJo6kC5q_M', 'The marriage market for Indian HIV patients | DW Documentary')">
+            <img loading="lazy" src="https://img.youtube.com/vi/gqJo6kC5q_M/hqdefault.jpg" alt="The marriage market for Indian HIV patients | DW Documentary">
+            <div class="video-title">The marriage market for Indian HIV patients</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('EB-HY5T5TEI', 'Sex addiction: Five times a day wasn\'t enough - BBC News')">
+            <img loading="lazy" src="https://img.youtube.com/vi/EB-HY5T5TEI/hqdefault.jpg" alt="Sex addiction: Five times a day wasn't enough - BBC News">
+            <div class="video-title">Sex addiction: Five times a day wasn't enough</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('zZrL8q2IDWg', 'Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates')">
+            <img loading="lazy" src="https://img.youtube.com/vi/zZrL8q2IDWg/hqdefault.jpg" alt="Face to Face With Former ISIS Sex Slaves: Stacey Dooley Investigates">
+            <div class="video-title">Face to Face With Former ISIS Sex Slaves</div>
+        </div>
+        <div class="video-thumbnail" onclick="openLightbox('o9X9jBxWyO8', 'Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655')">
+            <img loading="lazy" src="https://img.youtube.com/vi/o9X9jBxWyO8/hqdefault.jpg" alt="Anything but a Mother: The Dark Side of Mother Teresa | RAAAZ ft. @eeshamalkani1655">
+            <div class="video-title">Anything but a Mother: The Dark Side of Mother Teresa</div>
+        </div>
+        
     </div>
     
     
@@ -239,71 +108,7 @@
                         <button class="close" onclick="closeLightbox()">Close</button>
         </div>
     </div>
-    <script>
-        function openLightbox(videoId, title) {
-            document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
-            document.getElementById('lightbox').style.display = 'flex';
-            document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.getElementById('videoFrame').src = ''; // Stop the video
-        }
-
-        function minimizePlayer() {
-            // Logic to minimize the player
-            alert('Minimize functionality to be implemented.');
-        }
-
-        function filterVideos() {
-            const input = document.getElementById('searchInput');
-            const filter = input.value.toLowerCase();
-            const videoContainer = document.getElementById('videoContainer');
-            const videoThumbnails = videoContainer.getElementsByClassName('video-thumbnail');
-
-            for (let i = 0; i < videoThumbnails.length; i++) {
-                const title = videoThumbnails[i].getElementsByClassName('video-title')[0].innerText.toLowerCase();
-                if (title.includes(filter)) {
-                    videoThumbnails[i].style.display = ""; // Show the video thumbnail
-                } else {
-                    videoThumbnails[i].style.display = "none"; // Hide the video thumbnail
-                }
-            }
-        }
-        let isMinimized = false; // Track the minimized state
-
-function minimizePlayer() {
-    const lightbox = document.getElementById('lightbox');
-    const title = document.querySelector('.lightbox-title'); // Get the title element
-    const minimizeButton = document.getElementById('minimizeButton'); // Get the minimize button
-
-    if (isMinimized) {
-        lightbox.classList.remove('minimized'); // Restore to original size
-        title.classList.remove('hidden'); // Show the title
-        lightbox.style.display = 'flex'; // Show the lightbox
-        minimizeButton.innerText = 'Minimize'; // Change button text to "Minimize"
-    } else {
-        lightbox.classList.add('minimized'); // Add minimized class
-        title.classList.add('hidden'); // Hide the title
-        lightbox.style.display = 'block'; // Keep it visible
-        minimizeButton.innerText = 'Unminimize'; // Change button text to "Unminimize"
-    }
-    isMinimized = !isMinimized; // Toggle the state
-}
-
-function openLightbox(videoId, title) {
-    // Check if the player is minimized
-    if (isMinimized) {
-        minimizePlayer(); // Restore to unminimized state
-    }
-    
-    // Load the new video
-    document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videoId;
-    document.getElementById('lightbox').style.display = 'flex';
-    document.querySelector('.lightbox-title').innerText = title; // Set the title in the lightbox
-}
-    </script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
 

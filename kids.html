@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flaskmovies - Watch movies and shortfilms for free | 100% Legal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="description" content="Explore a diverse range of free and legal movies/shortfilms available on YouTube. Enjoy high-quality films without spending a dime. Start watching now!">
+    <meta name="keywords" content="Free Movies, Free, Youtube Movies"/>
+</head>
+<body>
+       <!-- Main Page Content -->
+  <div class="content" id="mainContent">
+    <div class="Text">
+     <a href="https://flaskmovies.pages.dev/" style="text-decoration: none;">
+            <h1 class="logo">Flaskmovies Kids</h1>
+        </a>
+        <b style="color: #D3D3D3;">Always free! 100% Legal</b>
+        <br><br>
+        <b style="color: #FFFFFF; background-color: #006a10; border: #000000; border: 4px solid #000000;" >Age Rating: U</b>
+    </div>
+    <div style="text-align:center; width:100%; background-color: f9f9f; color: black; padding: 6px; font-family: 'Arial', sans-serif">
+        <a href="/index.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-right: 5px;">Movies</a>
+        <span style="color: rgb(255, 255, 255);">/</span>
+        <a href="/documentaries.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-left: 5px;">Documentaries</a>
+        <span style="color: rgb(240, 240, 240);">/</span>
+        <a href="/kids.html" style="color: #D3D3D3; text-decoration: none; font-size: 17px; margin-left: 5px;">Kids</a>
+    </div>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for cartoons..." onkeyup="filterVideos()">
+    </div>
+  <div class="video-container" id="videoContainer">
+    <div class="video-thumbnail" onclick="openLightbox('Zx1oftIX9oE', 'Molang - Funny Cartoons | Yummy Food Truck | Full Episodes')">
+        <img loading="lazy" src="https://img.youtube.com/vi/Zx1oftIX9oE/hqdefault.jpg" alt="Molang - Funny Cartoons | Yummy Food Truck | Full Episodes">
+        <div class="video-title">Molang - Yummy Food Truck</div>
+    </div>
+    
+    <div class="video-thumbnail" onclick="openLightbox('pPbf-eVGS6E', 'NEW! Coffee Bean! ☕️ | Mr. Bean | Cartoons for Kids | WildBrain Kids')">
+        <img loading="lazy" src="https://img.youtube.com/vi/pPbf-eVGS6E/hqdefault.jpg" alt="NEW! Coffee Bean! ☕️ | Mr. Bean | Cartoons for Kids | WildBrain Kids">
+        <div class="video-title">Mr. Bean - Coffee Bean</div>
+    </div>
+    
+    <div class="video-thumbnail" onclick="openLightbox('p84nSJl2iNI', 'Masha and The Bear - Bon appétit! 🥟 Episode 24 New cartoon for kids 2016!')">
+        <img loading="lazy" src="https://img.youtube.com/vi/p84nSJl2iNI/hqdefault.jpg" alt="Masha and The Bear - Bon appétit! 🥟 Episode 24 New cartoon for kids 2016!">
+        <div class="video-title">Masha and The Bear - Bon appétit!</div>
+    </div>
+    
+    <div class="video-thumbnail" onclick="openLightbox('gMGRnXALVow', 'Shaun the Sheep - Happy Farmers Day')">
+        <img loading="lazy" src="https://img.youtube.com/vi/gMGRnXALVow/hqdefault.jpg" alt="Shaun the Sheep - Happy Farmers Day">
+        <div class="video-title">Shaun the Sheep - Happy Farmers Day</div>
+    </div>
+    
+    <div class="video-thumbnail" onclick="openLightbox('78t7DWEwrVU', 'BEAN Pizza | Mr Bean')">
+        <img loading="lazy" src="https://img.youtube.com/vi/78t7DWEwrVU/hqdefault.jpg" alt="BEAN Pizza | Mr Bean">
+        <div class="video-title">BEAN Pizza | Mr Bean</div>
+    </div>
+    
+    </div>
+    
+</div>
+    </div>
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <div class="lightbox-title">Now Playing</div>
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+            <div class="divider"></div>
+            <button class="minimize" id="minimizeButton" onclick="minimizePlayer()">Minimize</button>
+                        <button class="close" onclick="closeLightbox()">Close</button>
+        </div>
+    </div>
+    <script src="js/script.js" defer></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
